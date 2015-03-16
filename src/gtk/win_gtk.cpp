@@ -406,8 +406,14 @@ static void scroll_adjust(GtkWidget* widget, void* data)
     gtk_widget_get_allocation(widget, &a);
     a.x += p->dx;
     a.y += p->dy;
+#ifdef __WXGTK3__
+    if (gtk_widget_get_visible(widget))
+    {
+#endif
     gtk_widget_set_allocation(widget, &a);
-
+#ifdef __WXGTK3__
+    }
+#endif
     if (gtk_widget_get_window(widget) == p->window)
     {
         // GtkFrame requires a queue_resize, otherwise parts of
